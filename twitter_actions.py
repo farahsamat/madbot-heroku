@@ -1,12 +1,11 @@
 import tweepy
 import textwrap
-import fire
 import random
 import re
 from src.text_summary import TextSummary
 from src.cloud_image import CloudImage
 from gensim.summarization import summarize
-from datetime import datetime
+
 
 class TwitterActions:
     def __init__(self, api, username):
@@ -19,21 +18,6 @@ class TwitterActions:
             self.api.update_status(quote, tweet_method='extended')
         except tweepy.error.TweepError as e:
             print(quote, e)
-
-    def tweet_random(self):
-        gpt_model = GenerateUnconditionalSamples()
-        generate_text = fire.Fire(gpt_model.sample_model)
-        text_chunks = textwrap.wrap(generate_text, 280 - 5)
-        try:
-            self.api.update_status(
-                '[{}] The following text is brought to you by #OpenAI GPT2. Reader discretion is advised.'.format(
-                    datetime.now().strftime('%Y-%m-%d %H:%M:%S')), tweet_mode='extended')
-            tweet = self.api.user_timeline(screen_name=self.username, count=1)[0]
-            for i in range(len(text_chunks)):
-                self.api.update_status('{}/{}\n'.format(i + 1, len(text_chunks)) + text_chunks[i], tweet.id,
-                                       tweet_mode='extended')
-        except tweepy.error.TweepError as e:
-            print(e)
 
     def tweet_news(self, text, link):
         try:
@@ -85,25 +69,6 @@ class TwitterActions:
                     self.api.create_favorite(tweet.id)
             except tweepy.error.TweepError as e:
                 print(friend, e)
-
-    def reply_tweets(self):
-        for tweet in tweepy.Cursor(self.api.mentions_timeline).items(1):
-            gpt_model = InteractiveConditionalSample(tweet.text)
-            generate_reply = fire.Fire(gpt_model.interact_model())
-            if len(generate_reply) <= 280:
-                try:
-                    self.api.update_status('@' + tweet.user.screen_name + '#gpt2 ' + generate_reply, tweet.id, tweet_mode='extended')
-                except tweepy.error.TweepError as e:
-                    print(e)
-            else:
-                text_chunks = textwrap.wrap('#gpt2 '+generate_reply, 280)
-                try:
-                    self.api.update_status('@' + tweet.user.screen_name + text_chunks[0], tweet.id, tweet_mode='extended')
-                    for i in range(len(text_chunks)+1):
-                        self.api.update_status(text_chunks[i+1], tweet.id,
-                                               tweet_mode='extended')
-                except tweepy.error.TweepError as e:
-                    print(e)
 
     def view_trend(self):
         trends_result = self.api.trends_place(1)

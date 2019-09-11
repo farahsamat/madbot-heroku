@@ -5,11 +5,9 @@ import time
 from twitter_actions import TwitterActions
 from src.quotes import Quotes
 from src.websites import Websites
-from dotenv import load_dotenv
 from os import environ
 
 
-load_dotenv()
 os.system('cls' if os.name == 'nt' else 'clear')
 INTERVAL = 60 * 60 * 0.4
 MINI_INTERVAL = 60 * 60 * 0.04
