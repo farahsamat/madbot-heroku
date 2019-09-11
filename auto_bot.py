@@ -6,6 +6,7 @@ from twitter_actions import TwitterActions
 from src.quotes import Quotes
 from src.websites import Websites
 from dotenv import load_dotenv
+from os import environ
 
 
 load_dotenv()
@@ -16,11 +17,11 @@ MICRO_INTERVAL = 60 * 60 * 0.004
 sleep_time = [INTERVAL, MINI_INTERVAL, MICRO_INTERVAL]
 
 if __name__ == "__main__":
-    username = os.getenv("USERNAME")
-    consumer_key = os.getenv("KEY")
-    consumer_secret = os.getenv("SECRET")
-    access_token = os.getenv("TOKEN")
-    access_token_secret = os.getenv("TOKEN_SECRET")
+    username = environ("USERNAME")
+    consumer_key = environ['CONSUMER_KEY']
+    consumer_secret = environ['CONSUMER_SECRET']
+    access_token = environ['ACCESS_KEY']
+    access_token_secret = environ['ACCESS_SECRET']
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth, wait_on_rate_limit=True)
