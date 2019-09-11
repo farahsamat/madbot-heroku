@@ -15,7 +15,7 @@ MICRO_INTERVAL = 60 * 60 * 0.004
 sleep_time = [INTERVAL, MINI_INTERVAL, MICRO_INTERVAL]
 
 if __name__ == "__main__":
-    username = environ("USERNAME")
+    username = environ["USERNAME"]
     consumer_key = environ['KEY']
     consumer_secret = environ['SECRET']
     access_token = environ['TOKEN']
