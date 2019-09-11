@@ -1,1 +1,1 @@
-worker: python madbot-heroku/auto_bot.py
+worker: python auto_bot.py

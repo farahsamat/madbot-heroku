@@ -16,10 +16,10 @@ sleep_time = [INTERVAL, MINI_INTERVAL, MICRO_INTERVAL]
 
 if __name__ == "__main__":
     username = environ("USERNAME")
-    consumer_key = environ['CONSUMER_KEY']
-    consumer_secret = environ['CONSUMER_SECRET']
-    access_token = environ['ACCESS_KEY']
-    access_token_secret = environ['ACCESS_SECRET']
+    consumer_key = environ['KEY']
+    consumer_secret = environ['SECRET']
+    access_token = environ['TOKEN']
+    access_token_secret = environ['TOKEN_SECRET']
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth, wait_on_rate_limit=True)
