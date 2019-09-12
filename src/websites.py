@@ -154,3 +154,6 @@ class Websites:
 
     except IndexError:
         print("Index error")
+
+    except AttributeError:
+        print("Attribute error")
