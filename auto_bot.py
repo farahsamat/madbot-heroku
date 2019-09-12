@@ -10,9 +10,9 @@ from os import environ
 
 
 os.system('cls' if os.name == 'nt' else 'clear')
-INTERVAL = 60 * 60 * 0.5
-MINI_INTERVAL = 60 * 60 * 0.05
-MICRO_INTERVAL = 60 * 60 * 0.005
+INTERVAL = 60 * 60 * 1
+MINI_INTERVAL = 60 * 60 * 0.1
+MICRO_INTERVAL = 60 * 60 * 0.01
 sleep_time = [INTERVAL, MINI_INTERVAL, MICRO_INTERVAL]
 
 if __name__ == "__main__":
