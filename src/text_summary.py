@@ -12,7 +12,8 @@ class TextSummary:
 
     def page(self, url):
         if 'googleblog' in url:
-            driver = webdriver.PhantomJS(executable_path=phantomJS_path)
+            #driver = webdriver.PhantomJS(executable_path=phantomJS_path)
+            driver = webdriver.PhantomJS()
             driver.get(url)
             results = driver.find_element_by_xpath(".//html")
             whole_text = results.text.strip()

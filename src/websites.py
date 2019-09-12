@@ -136,7 +136,8 @@ class Websites:
 
         def bag_snob(self):
             tag = random.choice(snob_tags)
-            driver = webdriver.PhantomJS(executable_path=phantomJS_path)
+            #driver = webdriver.PhantomJS(executable_path=phantomJS_path)
+            driver = webdriver.PhantomJS()
             driver.get(bag_snob + '{}'.format(tag))
             results = driver.find_elements_by_tag_name('article')
             feeling_lucky = random.choice(results)

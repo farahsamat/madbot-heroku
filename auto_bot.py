@@ -43,6 +43,7 @@ if __name__ == "__main__":
                 scrape.bbc(),
                 scrape.malaysia_kini(),
                 scrape.song_of_style(),
+                scrape.bag_snob(),
                 scrape.sc_news()]
         random.shuffle(news)
 
