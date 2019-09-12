@@ -2,6 +2,7 @@ import tweepy
 import os
 import random
 import time
+import requests
 from twitter_actions import TwitterActions
 from src.quotes import Quotes
 from src.websites import Websites
@@ -9,9 +10,9 @@ from os import environ
 
 
 os.system('cls' if os.name == 'nt' else 'clear')
-INTERVAL = 60 * 60 * 0.4
-MINI_INTERVAL = 60 * 60 * 0.04
-MICRO_INTERVAL = 60 * 60 * 0.004
+INTERVAL = 60 * 60 * 0.5
+MINI_INTERVAL = 60 * 60 * 0.05
+MICRO_INTERVAL = 60 * 60 * 0.005
 sleep_time = [INTERVAL, MINI_INTERVAL, MICRO_INTERVAL]
 
 if __name__ == "__main__":
@@ -26,6 +27,7 @@ if __name__ == "__main__":
     mad_bot = TwitterActions(api, username)
 
     while True:
+        requests.get('https://themadbot.herokuapp.com')
         get_quote = Quotes()
         link = [get_quote.brainy(),
                 get_quote.good_reads(),
@@ -40,7 +42,8 @@ if __name__ == "__main__":
                 scrape.abc(),
                 scrape.bbc(),
                 scrape.malaysia_kini(),
-                scrape.song_of_style()]
+                scrape.song_of_style(),
+                scrape.sc_news()]
         random.shuffle(news)
 
         blogs = [scrape.towards_data_science(),
@@ -68,10 +71,10 @@ if __name__ == "__main__":
 
         mad_bot.like_tweets()
         pause = random.choice(sleep_time)
-        print(pause)
+        print(pause, "seconds")
         time.sleep(pause)
 
         mad_bot.tweet_summary(url)
         pause = random.choice(sleep_time)
-        print(pause)
+        print(pause, "seconds")
         time.sleep(pause)

@@ -50,12 +50,11 @@ class TwitterActions:
         else:
             text_chunks = textwrap.wrap(text_summary, 275)
             try:
-                self.api.update_status(url)
+                self.api.update_with_media("Summary of: ", url, image.word_cloud(text_summary))
                 tweet = self.api.user_timeline(screen_name=self.username, count=1)[0]
                 for i in range(len(text_chunks)):
                     self.api.update_status('{}/{}\n'.format(i + 1, len(text_chunks)) + text_chunks[i], tweet.id,
                                            tweet_mode='extended')
-                self.api.update_with_media(image.word_cloud(text_summary), tweet.id)
             except tweepy.error.TweepError as e:
                 print(e)
 
