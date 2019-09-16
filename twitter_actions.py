@@ -14,18 +14,23 @@ class TwitterActions:
         return
 
     def tweet_quote(self, quote):
-        try:
-            self.api.update_status(quote, tweet_method='extended')
-        except tweepy.error.TweepError as e:
-            print(quote, e)
+        if len(quote) <= 280:
+            try:
+                self.api.update_status(quote, tweet_method='extended')
+            except tweepy.error.TweepError as e:
+                print(quote, e)
+        else:
+            text_chunks = textwrap.wrap(quote, 275)
+            try:
+                self.api.update_status('1/{}\n'.format(len(text_chunks)) + text_chunks[0])
+                tweet = self.api.user_timeline(screen_name=self.username, count=1)[0]
+                for i in range(len(text_chunks)):
+                    self.api.update_status('{}/{}\n'.format(i + 1, len(text_chunks)) + text_chunks[i], tweet.id,
+                                           tweet_mode='extended')
+            except tweepy.error.TweepError as e:
+                print(quote, e)
 
     def tweet_news(self, text, link):
-        try:
-            self.api.update_status(text + ' ' + link, tweet_method='extended')
-        except tweepy.error.TweepError as e:
-            print(text, e)
-
-    def tweet_lifestyle(self, text, link):
         try:
             self.api.update_status(text + ' ' + link, tweet_method='extended')
         except tweepy.error.TweepError as e:
@@ -37,25 +42,11 @@ class TwitterActions:
         except tweepy.error.TweepError as e:
             print(text, e)
 
-    def tweet_summary(self, url):
-        whole_passage = TextSummary()
-        text = whole_passage.page(url)
-        text_summary = summarize(text)
-        if len(text_summary) <= 280:
-            try:
-                self.api.update_status('1/1\n', url + '\n', text_summary, tweet_mode='extended')
-            except tweepy.error.TweepError as e:
-                print(url, e)
-        else:
-            text_chunks = textwrap.wrap(text_summary, 275)
-            try:
-                self.api.update_status("Summary of: ", url)
-                tweet = self.api.user_timeline(screen_name=self.username, count=1)[0]
-                for i in range(len(text_chunks)):
-                    self.api.update_status('{}/{}\n'.format(i + 1, len(text_chunks)) + text_chunks[i], tweet.id,
-                                           tweet_mode='extended')
-            except tweepy.error.TweepError as e:
-                print(e)
+    def tweet_lifestyle(self, text, link):
+        try:
+            self.api.update_status(text + ' ' + link, tweet_method='extended')
+        except tweepy.error.TweepError as e:
+            print(text, e)
 
     def like_tweets_and_RT(self):
         friends = [user.screen_name for user in tweepy.Cursor(self.api.friends, screen_name=self.username).items()]
@@ -78,9 +69,27 @@ class TwitterActions:
                 print(friend, e)
 
 
-
-
 # --- For future work --- #
+    def tweet_summary(self, url):
+        whole_passage = TextSummary()
+        text = whole_passage.page(url)
+        text_summary = summarize(text)
+        if len(text_summary) <= 280:
+            try:
+                self.api.update_status(url + '\n', text_summary, tweet_mode='extended')
+            except tweepy.error.TweepError as e:
+                print(url, e)
+        else:
+            text_chunks = textwrap.wrap(text_summary, 275)
+            try:
+                self.api.update_status("Summary of: ", url)
+                tweet = self.api.user_timeline(screen_name=self.username, count=1)[0]
+                for i in range(len(text_chunks)):
+                    self.api.update_status('{}/{}\n'.format(i + 1, len(text_chunks)) + text_chunks[i], tweet.id,
+                                           tweet_mode='extended')
+            except tweepy.error.TweepError as e:
+                print(e)
+
     def view_trend(self):
         trends_result = self.api.trends_place(1)
         trends = [trend["name"] for trend in trends_result[0]["trends"]]

@@ -145,6 +145,15 @@ class Websites:
             text = '#business_insider #{} '.format(tag) + feeling_lucky.find_element_by_css_selector('h3').text
             return text[:100], link
 
+        def sc_news(self):
+            tag = random.choice(sc_tags)
+            driver.get(sc_news + '{}'.format(tag))
+            results = driver.find_elements_by_xpath("//li[@class='post-item-river__wrapper___2c_E- with-image']")
+            feeling_lucky = random.choice(results)
+            link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
+            text = '#sciencenews #{} '.format(tag) + feeling_lucky.find_element_by_css_selector('h3').text
+            return text[:100], link
+
         def song_of_style(self):
             tag = random.choice(sos_tags)
             if tag == 'video':
@@ -164,16 +173,6 @@ class Websites:
             link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
             text = '#bagsnob #{} '.format(tag) + feeling_lucky.find_element_by_css_selector('a').get_attribute('title')
             return text[:100], link
-
-        def sc_news(self):
-            tag = random.choice(sc_tags)
-            driver.get(sc_news + '{}'.format(tag))
-            results = driver.find_elements_by_xpath("//li[@class='post-item-river__wrapper___2c_E- with-image']")
-            feeling_lucky = random.choice(results)
-            link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
-            text = '#sciencenews #{} '.format(tag) + feeling_lucky.find_element_by_css_selector('h3').text
-            return text[:100], link
-
 
     except IndexError:
         print("Index error")
