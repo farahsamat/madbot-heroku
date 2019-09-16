@@ -25,7 +25,7 @@ class TwitterActions:
                 self.api.update_status('1/{}\n'.format(len(text_chunks)) + text_chunks[0])
                 tweet = self.api.user_timeline(screen_name=self.username, count=1)[0]
                 for i in range(len(text_chunks)):
-                    self.api.update_status('{}/{}\n'.format(i + 1, len(text_chunks)) + text_chunks[i], tweet.id,
+                    self.api.update_status('{}/{}\n'.format(i + 1, len(text_chunks)) + text_chunks[i+1], tweet.id,
                                            tweet_mode='extended')
             except tweepy.error.TweepError as e:
                 print(quote, e)
