@@ -24,7 +24,7 @@ tech_crunch = 'https://techcrunch.com/'
 business_insider = 'https://www.businessinsider.com.au/'
 song_of_style = 'http://www.songofstyle.com/category/'
 bag_snob = 'https://bagsnob.com/category/'
-sc_news = "https://www.sciencenews.org"
+sc_news = "https://www.sciencenews.org/topic/"
 
 
 tds_tags = ['machine-learning',
@@ -34,10 +34,7 @@ tds_tags = ['machine-learning',
             'data-visualization',
             'data-journalism']
 
-verge_tags = ['tech',
-              'science',
-              'entertainment',
-              'creators']
+verge_tags = ['tech', 'science', 'entertainment', 'creators']
 
 bi_tags = ['tech',
            'research',
@@ -46,17 +43,15 @@ bi_tags = ['tech',
            'money-markets',
            'executive-life']
 
+sc_tags = ['life', 'humans', 'physics', 'earth', 'space']
+
 sos_tags = ['fashion',
             'beauty',
             'travel',
             'lifestyle',
             'video']
 
-snob_tags = ['bags',
-             'beauty',
-             'style',
-             'living',
-             'travel']
+snob_tags = ['bags', 'beauty', 'style', 'living', 'travel']
 
 
 class Websites:
@@ -171,10 +166,12 @@ class Websites:
             return text[:100], link
 
         def sc_news(self):
-            web_data = BeautifulSoup(requests.get(sc_news).text, 'html.parser').find_all('article')
-            feeling_lucky = random.choice(web_data)
-            link = feeling_lucky.find('a')['href']
-            text = '#sciencenews ' + feeling_lucky.find('h2').text.strip()
+            tag = random.choice(sc_tags)
+            driver.get(sc_news + '{}'.format(tag))
+            results = driver.find_elements_by_xpath("//li[@class='post-item-river__wrapper___2c_E- with-image']")
+            feeling_lucky = random.choice(results)
+            link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
+            text = '#sciencenews #{} '.format(tag) + feeling_lucky.find_element_by_css_selector('h3').text
             return text[:100], link
 
 

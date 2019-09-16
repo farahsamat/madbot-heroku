@@ -1,5 +1,4 @@
 import tweepy
-import os
 import random
 import time
 from twitter_actions import TwitterActions
@@ -7,8 +6,6 @@ from src.quotes import Quotes
 from src.websites import Websites
 from os import environ
 
-
-os.system('cls' if os.name == 'nt' else 'clear')
 INTERVAL = 60 * 60 * 1
 MINI_INTERVAL = 60 * 60 * 0.1
 MICRO_INTERVAL = 60 * 60 * 0.01
@@ -52,6 +49,7 @@ if __name__ == "__main__":
                  scrape.tech_crunch()]
         random.shuffle(blogs)
         _, url = random.choice(blogs) #for summary
+        print(url)
 
         for q, n, b in zip(link, news, blogs):
             mad_bot.tweet_quote(q)
