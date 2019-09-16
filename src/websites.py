@@ -1,6 +1,5 @@
 import requests
 import random
-import os
 import sys
 import warnings
 from bs4 import BeautifulSoup
@@ -9,7 +8,7 @@ from selenium import webdriver
 if not sys.warnoptions:
     warnings.simplefilter("ignore")
 
-phantomJS_path = os.path.abspath('src/phantomjs')
+driver = webdriver.PhantomJS()
 
 bbc = 'https://www.bbc.com/news/'
 ny_times = 'https://www.nytimes.com/'
@@ -18,14 +17,34 @@ malaysia_kini = 'https://www.malaysiakini.com/'
 abc = 'https://www.abc.net.au/news/'
 nine_news = 'https://www.9news.com.au/'
 towards_data_science = 'https://towardsdatascience.com/'
-nature = 'https://www.nature.com/'
+nature = 'https://www.nature.com/news'
 google_ai = 'https://ai.googleblog.com/'
-the_verge = 'https://www.theverge.com/tech'
+the_verge = 'https://www.theverge.com/'
 tech_crunch = 'https://techcrunch.com/'
 business_insider = 'https://www.businessinsider.com.au/'
 song_of_style = 'http://www.songofstyle.com/category/'
 bag_snob = 'https://bagsnob.com/category/'
 sc_news = "https://www.sciencenews.org"
+
+
+tds_tags = ['machine-learning',
+            'data-science',
+            'programming',
+            'artificial-intelligence',
+            'data-visualization',
+            'data-journalism']
+
+verge_tags = ['tech',
+              'science',
+              'entertainment',
+              'creators']
+
+bi_tags = ['tech',
+           'research',
+           'briefing',
+           'ideas',
+           'money-markets',
+           'executive-life']
 
 sos_tags = ['fashion',
             'beauty',
@@ -82,31 +101,37 @@ class Websites:
             return text[:100], link
 
         def towards_data_science(self):
-            web_data = BeautifulSoup(requests.get(towards_data_science).text, 'html.parser').find_all(class_='streamItem streamItem--section js-streamItem')
-            feeling_lucky = random.choice(web_data)
-            link = feeling_lucky.find('a')['href']
-            text = '#towardsdatascience ' + feeling_lucky.find('h3').text
+            tag = random.choice(tds_tags)
+            driver.get(towards_data_science + '{}'.format(tag))
+            results = driver.find_elements_by_xpath("//div[@class ='col u-xs-size12of12 js-trackPostPresentation u-paddingLeft12 u-marginBottom15 u-paddingRight12 u-size4of12']")
+            feeling_lucky = random.choice(results)
+            link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
+            text = '#towardsdatascience #{} '.format(tag) + feeling_lucky.find_element_by_css_selector('h3').text
             return text[:100], link
 
         def nature(self):
-            web_data = BeautifulSoup(requests.get(nature).text, 'html.parser').find_all('article')
-            #feeling_lucky = random.choice(web_data)
-            link = web_data[0].find('a')['href']
-            text = '#nature ' + web_data[0].find('h3').text.strip()
+            driver.get(nature)
+            results = driver.find_elements_by_xpath("//ul[@class='u-flex u-flex--wrap mb0 u-clean-list']")
+            feeling_lucky = random.choice(results)
+            link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
+            text = '#nature #news ' + feeling_lucky.find_element_by_css_selector('h3').text
             return text[:100], link
 
         def google_ai(self):
-            web_data = BeautifulSoup(requests.get(google_ai).text, 'html.parser').find_all(class_='post')
-            feeling_lucky = random.choice(web_data)
-            link = feeling_lucky.find('a')['href']
-            text = '#googleAI ' + feeling_lucky.find('h2').text.strip()
+            driver.get(google_ai)
+            results = driver.find_elements_by_xpath("//div[@class='post']")
+            feeling_lucky = random.choice(results)
+            link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
+            text = '#googleAI ' + feeling_lucky.find_element_by_css_selector('a').get_attribute('title')
             return text[:100], link
 
         def the_verge(self):
-            web_data = BeautifulSoup(requests.get(the_verge).text, 'html.parser').find_all(class_='l-hero ')
-            feeling_lucky = random.choice(web_data)
-            link = feeling_lucky.find('a')['href']
-            text = '#theverge ' + feeling_lucky.find('h3').text.strip()
+            tag = random.choice(verge_tags)
+            driver.get(the_verge + '{}'.format(tag))
+            results = driver.find_elements_by_xpath("//div[@class='c-compact-river__entry ']")
+            feeling_lucky = random.choice(results)
+            link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
+            text = '#the_verge #{} '.format(tag) + feeling_lucky.find_element_by_css_selector('h2').text
             return text[:100], link
 
         def tech_crunch(self):
@@ -117,10 +142,12 @@ class Websites:
             return text[:100], link
 
         def business_insider(self):
-            web_data = BeautifulSoup(requests.get(business_insider).text, 'html.parser').find_all('div', {'id': 'top-stories'})
-            feeling_lucky = random.choice(web_data)
-            link = feeling_lucky.find('a')['href']
-            text = '#BI ' + feeling_lucky.find('h1').text.strip()
+            tag = random.choice(bi_tags)
+            driver.get(business_insider + '{}'.format(tag))
+            results = driver.find_elements_by_xpath("//div[@class='post-title']")
+            feeling_lucky = random.choice(results)
+            link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
+            text = '#business_insider #{} '.format(tag) + feeling_lucky.find_element_by_css_selector('h3').text
             return text[:100], link
 
         def song_of_style(self):
@@ -136,8 +163,6 @@ class Websites:
 
         def bag_snob(self):
             tag = random.choice(snob_tags)
-            #driver = webdriver.PhantomJS(executable_path=phantomJS_path)
-            driver = webdriver.PhantomJS()
             driver.get(bag_snob + '{}'.format(tag))
             results = driver.find_elements_by_tag_name('article')
             feeling_lucky = random.choice(results)
@@ -158,3 +183,5 @@ class Websites:
 
     except AttributeError:
         print("Attribute error")
+
+

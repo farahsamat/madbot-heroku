@@ -41,7 +41,6 @@ class TwitterActions:
         whole_passage = TextSummary()
         text = whole_passage.page(url)
         text_summary = summarize(text)
-        image = CloudImage()
         if len(text_summary) <= 280:
             try:
                 self.api.update_status('1/1\n', url + '\n', text_summary, tweet_mode='extended')
@@ -50,7 +49,7 @@ class TwitterActions:
         else:
             text_chunks = textwrap.wrap(text_summary, 275)
             try:
-                self.api.update_with_media("Summary of: ", url, image.word_cloud(text_summary))
+                self.api.update_status("Summary of: ", url)
                 tweet = self.api.user_timeline(screen_name=self.username, count=1)[0]
                 for i in range(len(text_chunks)):
                     self.api.update_status('{}/{}\n'.format(i + 1, len(text_chunks)) + text_chunks[i], tweet.id,
@@ -58,7 +57,7 @@ class TwitterActions:
             except tweepy.error.TweepError as e:
                 print(e)
 
-    def like_tweets(self):
+    def like_tweets_and_RT(self):
         friends = [user.screen_name for user in tweepy.Cursor(self.api.friends, screen_name=self.username).items()]
         random.shuffle(friends)
         for friend in friends:
@@ -69,6 +68,19 @@ class TwitterActions:
             except tweepy.error.TweepError as e:
                 print(friend, e)
 
+        selected_friends = friends[:5]
+        for friend in selected_friends:
+            try:
+                for tweet in tweepy.Cursor(self.api.user_timeline, screen_name='@' + friend, exclude_replies=True,
+                                           include_rts=False).items(1):
+                    self.api.retweet(tweet.id)
+            except tweepy.error.TweepError as e:
+                print(friend, e)
+
+
+
+
+# --- For future work --- #
     def view_trend(self):
         trends_result = self.api.trends_place(1)
         trends = [trend["name"] for trend in trends_result[0]["trends"]]

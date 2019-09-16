@@ -1,10 +1,8 @@
 import requests
-import os
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
-phantomJS_path = os.path.abspath('src/phantomjs')
-
+driver = webdriver.PhantomJS()
 
 class TextSummary:
     def __init__(self):
@@ -12,8 +10,6 @@ class TextSummary:
 
     def page(self, url):
         if 'googleblog' in url:
-            #driver = webdriver.PhantomJS(executable_path=phantomJS_path)
-            driver = webdriver.PhantomJS()
             driver.get(url)
             results = driver.find_element_by_xpath(".//html")
             whole_text = results.text.strip()
