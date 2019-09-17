@@ -62,37 +62,37 @@ class Websites:
         def bbc(self):
             web_data = BeautifulSoup(requests.get(bbc).text, 'html.parser').find_all(class_='nw-c-top-stories-primary__story gel-layout gs-u-pb gs-u-pb0@m')
             link = '{}'.format(bbc[:-6]) + web_data[0].find('a')['href']
-            text = '#bbcnews ' + web_data[0].find('h3').text
+            text = web_data[0].find('h3').text + ' #bbcnews'
             return text[:100], link
 
         def ny_times(self):
             web_data = BeautifulSoup(requests.get(ny_times).text, 'html.parser').find_all(class_='css-16ugw5f e1aa0s8g0')
             link = '{}'.format(ny_times[:-1]) + web_data[0].find('a')['href']
-            text = '#nytimes ' + web_data[0].find('h2').text
+            text = web_data[0].find('h2').text + ' #nytimes '
             return text[:100], link
 
         def the_star(self):
             web_data = BeautifulSoup(requests.get(the_star).text, 'html.parser').find_all(class_='focus-story')
             link = web_data[0].find('a')['href']
-            text = '#thestaronline ' + web_data[0].find('h2').text.strip()
+            text = web_data[0].find('h2').text.strip() + ' #thestaronline'
             return text[:100], link
 
         def malaysia_kini(self):
             web_data = BeautifulSoup(requests.get(malaysia_kini).text, 'html.parser').find_all(class_='uk-container')
             link = '{}'.format(malaysia_kini[:-1]) + web_data[0].find('a')['href']
-            text = '#malaysiakini ' + web_data[0].find('h3').text
+            text = web_data[0].find('h3').text + ' #malaysiakini'
             return text[:100], link
 
         def abc(self):
             web_data = BeautifulSoup(requests.get(abc).text, 'html.parser').find_all(class_='section module-body')
             link = '{}'.format(abc[:-6]) + web_data[0].find('a')['href']
-            text = '#abcnews ' + web_data[0].find('h3').text.strip()
+            text = web_data[0].find('h3').text.strip() + '# abcnews'
             return text[:100], link
 
         def nine_news(self):
             web_data = BeautifulSoup(requests.get(nine_news).text, 'html.parser').find_all('article')
             link = web_data[0].find('a')['href']
-            text = '#ninenews ' + web_data[0].find('h1').text
+            text = web_data[0].find('h1').text + ' #ninenews'
             return text[:100], link
 
         def towards_data_science(self):
@@ -101,7 +101,7 @@ class Websites:
             results = driver.find_elements_by_xpath("//div[@class ='col u-xs-size12of12 js-trackPostPresentation u-paddingLeft12 u-marginBottom15 u-paddingRight12 u-size4of12']")
             feeling_lucky = random.choice(results)
             link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
-            text = '#towardsdatascience #{} '.format(tag) + feeling_lucky.find_element_by_css_selector('h3').text
+            text = feeling_lucky.find_element_by_css_selector('h3').text + '#towardsdatascience #{} '.format(tag.replace("-",""))
             return text[:100], link
 
         def nature(self):
@@ -109,7 +109,7 @@ class Websites:
             results = driver.find_elements_by_xpath("//ul[@class='u-flex u-flex--wrap mb0 u-clean-list']")
             feeling_lucky = random.choice(results)
             link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
-            text = '#nature #news ' + feeling_lucky.find_element_by_css_selector('h3').text
+            text = feeling_lucky.find_element_by_css_selector('h3').text + ' #nature #news'
             return text[:100], link
 
         def google_ai(self):
@@ -117,7 +117,7 @@ class Websites:
             results = driver.find_elements_by_xpath("//div[@class='post']")
             feeling_lucky = random.choice(results)
             link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
-            text = '#googleAI ' + feeling_lucky.find_element_by_css_selector('a').get_attribute('title')
+            text = feeling_lucky.find_element_by_css_selector('a').get_attribute('title') + ' #googleAI'
             return text[:100], link
 
         def the_verge(self):
@@ -126,14 +126,14 @@ class Websites:
             results = driver.find_elements_by_xpath("//div[@class='c-compact-river__entry ']")
             feeling_lucky = random.choice(results)
             link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
-            text = '#the_verge #{} '.format(tag) + feeling_lucky.find_element_by_css_selector('h2').text
+            text = feeling_lucky.find_element_by_css_selector('h2').text + ' #the_verge #{} '.format(tag)
             return text[:100], link
 
         def tech_crunch(self):
             web_data = BeautifulSoup(requests.get(tech_crunch).text, 'html.parser').find_all(class_='content')
             feeling_lucky = random.choice(web_data)
             link = feeling_lucky.find('a')['href']
-            text = '#techcrunch ' + feeling_lucky.find('h2', {'class': 'post-block__title'}).text.strip()
+            text = feeling_lucky.find('h2', {'class': 'post-block__title'}).text.strip() + ' #techcrunch'
             return text[:100], link
 
         def business_insider(self):
@@ -142,7 +142,7 @@ class Websites:
             results = driver.find_elements_by_xpath("//div[@class='post-title']")
             feeling_lucky = random.choice(results)
             link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
-            text = '#business_insider #{} '.format(tag) + feeling_lucky.find_element_by_css_selector('h3').text
+            text = feeling_lucky.find_element_by_css_selector('h3').text + ' #business_insider #{} '.format(tag)
             return text[:100], link
 
         def sc_news(self):
@@ -151,7 +151,7 @@ class Websites:
             results = driver.find_elements_by_xpath("//li[@class='post-item-river__wrapper___2c_E- with-image']")
             feeling_lucky = random.choice(results)
             link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
-            text = '#sciencenews #{} '.format(tag) + feeling_lucky.find_element_by_css_selector('h3').text
+            text = feeling_lucky.find_element_by_css_selector('h3').text + ' #sciencenews #{}'.format(tag)
             return text[:100], link
 
         def song_of_style(self):
@@ -162,7 +162,7 @@ class Websites:
                 web_data = BeautifulSoup(requests.get(song_of_style + '{}'.format(tag)).text, 'html.parser').find_all(class_='row cards')
             feeling_lucky = random.choice(web_data)
             link = feeling_lucky.find('a')['href']
-            text = '#songofstyle #favsong #aimeesong #{} '.format(tag) + feeling_lucky.find('h1').text.strip()
+            text = feeling_lucky.find('h1').text.strip() + ' #songofstyle #{}'.format(tag)
             return text[:100], link
 
         def bag_snob(self):
@@ -171,7 +171,7 @@ class Websites:
             results = driver.find_elements_by_tag_name('article')
             feeling_lucky = random.choice(results)
             link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
-            text = '#bagsnob #{} '.format(tag) + feeling_lucky.find_element_by_css_selector('a').get_attribute('title')
+            text = feeling_lucky.find_element_by_css_selector('a').get_attribute('title') + ' #bagsnob #{}'.format(tag)
             return text[:100], link
 
     except IndexError:

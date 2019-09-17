@@ -14,21 +14,10 @@ class TwitterActions:
         return
 
     def tweet_quote(self, quote):
-        if len(quote) <= 280:
-            try:
-                self.api.update_status(quote, tweet_method='extended')
-            except tweepy.error.TweepError as e:
-                print(quote, e)
-        else:
-            text_chunks = textwrap.wrap(quote, 275)
-            try:
-                self.api.update_status('1/{}\n'.format(len(text_chunks)) + text_chunks[0])
-                tweet = self.api.user_timeline(screen_name=self.username, count=1)[0]
-                for i in range(len(text_chunks)):
-                    self.api.update_status('{}/{}\n'.format(i + 1, len(text_chunks)) + text_chunks[i+1], tweet.id,
-                                           tweet_mode='extended')
-            except tweepy.error.TweepError as e:
-                print(quote, e)
+        try:
+            self.api.update_status(quote, tweet_method='extended')
+        except tweepy.error.TweepError as e:
+            print(quote, e)
 
     def tweet_news(self, text, link):
         try:
