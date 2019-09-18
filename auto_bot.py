@@ -23,6 +23,8 @@ if __name__ == "__main__":
     mad_bot = TwitterActions(api, username)
 
     while True:
+        mad_bot.get_friend_list()
+
         get_quote = Quotes()
         link = [get_quote.brainy(),
                 get_quote.good_reads(),

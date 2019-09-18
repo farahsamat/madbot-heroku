@@ -12,7 +12,8 @@ class TwitterActions:
 
     def get_friend_list(self):
         try:
-            friends.append(user.screen_name for user in tweepy.Cursor(self.api.friends, screen_name=self.username).items())
+            for user in tweepy.Cursor(self.api.friends, screen_name=self.username).items():
+                friends.append(user.screen_name )
         except tweepy.error.TweepError as e:
             print(e)
 
