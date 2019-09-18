@@ -6,9 +6,9 @@ from src.quotes import Quotes
 from src.websites import Websites
 from os import environ
 
-INTERVAL = 60 * 60 * 1
-MINI_INTERVAL = 60 * 60 * 0.1
-MICRO_INTERVAL = 60 * 60 * 0.01
+INTERVAL = 60 * 60 * 0.5
+MINI_INTERVAL = 60 * 60 * 0.05
+MICRO_INTERVAL = 60 * 60 * 0.005
 sleep_time = [INTERVAL, MINI_INTERVAL, MICRO_INTERVAL]
 
 if __name__ == "__main__":
@@ -53,29 +53,29 @@ if __name__ == "__main__":
 
         for q, n, a, b in zip(link, news, sc_tech, blogs):
             mad_bot.tweet_quote(q)
-            pause = random.choice(sleep_time)
+            pause = random.choice(sleep_time)*random.randint(1,10)
             print(int(pause), "seconds")
             time.sleep(pause)
 
             text, url = n
             mad_bot.tweet_news(text, url)
-            pause = random.choice(sleep_time)
+            pause = random.choice(sleep_time)*random.randint(1,10)
             print(int(pause), "seconds")
             time.sleep(pause)
 
             text, url = a
             mad_bot.tweet_sc_tech(text, url)
-            pause = random.choice(sleep_time)
+            pause = random.choice(sleep_time)*random.randint(1,10)
             print(int(pause), "seconds")
             time.sleep(pause)
 
             text, url = b
             mad_bot.tweet_lifestyle(text, url)
-            pause = random.choice(sleep_time)
+            pause = random.choice(sleep_time)*random.randint(1,10)
             print(int(pause), "seconds")
             time.sleep(pause)
 
         mad_bot.like_tweets()
-        pause = random.choice(sleep_time)
+        pause = random.choice(sleep_time)*random.randint(1,10)
         print(pause, "seconds")
         time.sleep(pause)

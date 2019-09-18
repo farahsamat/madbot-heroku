@@ -101,7 +101,7 @@ class Websites:
             results = driver.find_elements_by_xpath("//div[@class ='col u-xs-size12of12 js-trackPostPresentation u-paddingLeft12 u-marginBottom15 u-paddingRight12 u-size4of12']")
             feeling_lucky = random.choice(results)
             link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
-            text = feeling_lucky.find_element_by_css_selector('h3').text + '#towardsdatascience #{} '.format(tag.replace("-",""))
+            text = feeling_lucky.find_element_by_css_selector('h3').text + ' #towardsdatascience #{}'.format(tag.replace("-",""))
             return text[:100], link
 
         def nature(self):
