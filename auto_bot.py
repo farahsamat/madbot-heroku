@@ -51,6 +51,8 @@ if __name__ == "__main__":
                 scrape.bag_snob()]
         random.shuffle(blogs)
 
+        mad_bot.view_trend()
+
         for q, n, a, b in zip(link, news, sc_tech, blogs):
             mad_bot.tweet_quote(q)
             pause = random.choice(sleep_time)*random.randint(1,10)

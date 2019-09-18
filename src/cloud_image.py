@@ -17,11 +17,12 @@ class CloudImage:
                            stopwords=stopwords).generate(' '.join(re.sub(r"[^a-z0-9]", " ", text.lower()).split(" ")))
 
         # plot and save the WordCloud image
-        image_path = os.path.abspath('images') + '/word_cloud.png'
+        image_path = 'http://s3.amazonaws.com/themadbot-assets/word_cloud.png'
+        #image_path = os.path.abspath('images') + '/word_cloud.png'
         plt.figure(figsize=(4, 4), facecolor=None)
         plt.imshow(w_cloud)
         plt.axis("off")
         plt.tight_layout(pad=0)
-        plt.savefig(os.path.abspath(image_path))
+        plt.savefig(image_path)
         return image_path
 
