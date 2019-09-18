@@ -86,7 +86,7 @@ class Websites:
         def abc(self):
             web_data = BeautifulSoup(requests.get(abc).text, 'html.parser').find_all(class_='section module-body')
             link = '{}'.format(abc[:-6]) + web_data[0].find('a')['href']
-            text = web_data[0].find('h3').text.strip() + '# abcnews'
+            text = web_data[0].find('h3').text.strip() + ' #abcnews'
             return text[:100], link
 
         def nine_news(self):
