@@ -6,12 +6,20 @@ from src.text_summary import TextSummary
 from src.cloud_image import CloudImage
 from gensim.summarization import summarize
 
+friends = []
 
 class TwitterActions:
     def __init__(self, api, username):
         self.api = api
         self.username = username
         return
+
+    def get_friend_list(self):
+        try:
+            friends.append(user.screen_name for user in tweepy.Cursor(self.api.friends, screen_name=self.username).items())
+        except tweepy.error.TweepError as e:
+            print(e)
+
 
     def tweet_quote(self, quote):
         try:
@@ -37,8 +45,7 @@ class TwitterActions:
         except tweepy.error.TweepError as e:
             print(text, e)
 
-    def like_tweets_and_RT(self):
-        friends = [user.screen_name for user in tweepy.Cursor(self.api.friends, screen_name=self.username).items()]
+    def like_tweets(self):
         random.shuffle(friends)
         for friend in friends:
             try:
@@ -48,6 +55,10 @@ class TwitterActions:
             except tweepy.error.TweepError as e:
                 print(friend, e)
 
+
+# --- For future work --- #
+    def retweet(self):
+        random.shuffle(friends)
         selected_friends = friends[:5]
         for friend in selected_friends:
             try:
@@ -57,8 +68,6 @@ class TwitterActions:
             except tweepy.error.TweepError as e:
                 print(friend, e)
 
-
-# --- For future work --- #
     def tweet_summary(self, url):
         whole_passage = TextSummary()
         text = whole_passage.page(url)

@@ -75,7 +75,7 @@ if __name__ == "__main__":
             print(int(pause), "seconds")
             time.sleep(pause)
 
-        mad_bot.like_tweets_and_RT()
+        mad_bot.like_tweets()
         pause = random.choice(sleep_time)
         print(pause, "seconds")
         time.sleep(pause)
