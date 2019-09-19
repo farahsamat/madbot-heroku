@@ -6,9 +6,9 @@ from src.quotes import Quotes
 from src.websites import Websites
 from os import environ
 
-INTERVAL = 60 * 60 * 0.5
-MINI_INTERVAL = 60 * 60 * 0.05
-MICRO_INTERVAL = 60 * 60 * 0.005
+INTERVAL = 60 * 60 * 0.11
+MINI_INTERVAL = 60 * 60 * 0.055
+MICRO_INTERVAL = 60 * 60 * 0.0099
 sleep_time = [INTERVAL, MINI_INTERVAL, MICRO_INTERVAL]
 
 if __name__ == "__main__":
