@@ -80,7 +80,7 @@ class Websites:
         def malaysia_kini(self):
             web_data = BeautifulSoup(requests.get(malaysia_kini).text, 'html.parser').find_all(class_='uk-container')
             link = '{}'.format(malaysia_kini[:-1]) + web_data[0].find('a')['href']
-            text =  '#malaysiakini '+web_data[0].find('h3').text
+            text = '#malaysiakini '+web_data[0].find('h3').text
             return text[:100], link
 
         def abc(self):
@@ -101,7 +101,7 @@ class Websites:
             results = driver.find_elements_by_xpath("//div[@class ='col u-xs-size12of12 js-trackPostPresentation u-paddingLeft12 u-marginBottom15 u-paddingRight12 u-size4of12']")
             feeling_lucky = random.choice(results)
             link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
-            text = '#towardsdatascience #{}'.format(tag.replace("-",""))+feeling_lucky.find_element_by_css_selector('h3').text
+            text = '#towardsdatascience #{} '.format(tag.replace("-",""))+feeling_lucky.find_element_by_css_selector('h3').text
             return text[:100], link
 
         def nature(self):
@@ -109,7 +109,7 @@ class Websites:
             results = driver.find_elements_by_xpath("//ul[@class='u-flex u-flex--wrap mb0 u-clean-list']")
             feeling_lucky = random.choice(results)
             link = feeling_lucky.find_element_by_css_selector('a').get_attribute('href')
-            text = feeling_lucky.find_element_by_css_selector('h3').text + ' #nature #news'
+            text = '#nature #news '+feeling_lucky.find_element_by_css_selector('h3').text
             return text[:100], link
 
         def google_ai(self):
