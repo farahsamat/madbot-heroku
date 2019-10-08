@@ -49,11 +49,7 @@ if __name__ == "__main__":
                  scrape.the_verge()]
         random.shuffle(sc_tech)
 
-        blogs = [scrape.song_of_style(),
-                scrape.bag_snob()]
-        random.shuffle(blogs)
-
-        for q, n, a, b in zip(link, news, sc_tech, blogs):
+        for q, n, a in zip(link, news, sc_tech):
             mad_bot.tweet_quote(q)
             pause = random.choice(sleep_time)*random.randint(1,10)
             print(int(pause), "seconds")
@@ -71,13 +67,10 @@ if __name__ == "__main__":
             print(int(pause), "seconds")
             time.sleep(pause)
 
-            text, url = b
-            mad_bot.tweet_lifestyle(text, url)
-            pause = random.choice(sleep_time)*random.randint(1,10)
-            print(int(pause), "seconds")
-            time.sleep(pause)
-
         mad_bot.like_tweets()
         pause = random.choice(sleep_time)*random.randint(1,10)
         print(pause, "seconds")
         time.sleep(pause)
+
+
+

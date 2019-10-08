@@ -3,7 +3,6 @@ import random
 
 friends = []
 
-
 class TwitterActions:
     def __init__(self, api, username):
         self.api = api
@@ -16,7 +15,6 @@ class TwitterActions:
                 friends.append(user.screen_name )
         except tweepy.error.TweepError as e:
             print(e)
-
 
     def tweet_quote(self, quote):
         try:
@@ -36,12 +34,6 @@ class TwitterActions:
         except tweepy.error.TweepError as e:
             print(text, e)
 
-    def tweet_lifestyle(self, text, link):
-        try:
-            self.api.update_status(text + ' ' + link, tweet_method='extended')
-        except tweepy.error.TweepError as e:
-            print(text, e)
-
     def like_tweets(self):
         random.shuffle(friends)
         for friend in friends:
@@ -51,3 +43,5 @@ class TwitterActions:
                     self.api.create_favorite(tweet.id)
             except tweepy.error.TweepError as e:
                 print(friend, e)
+
+
