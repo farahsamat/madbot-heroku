@@ -38,14 +38,13 @@ ki_tags = ['famous-quotes/',
 
 class Quotes:
     try:
-
         def __init__(self):
             return
 
         def good_reads(self):
             web_data = BeautifulSoup(requests.get(goodreads_quotes + 'tag/{}'.format(random.choice(gr_tags))).text,
                                      'html.parser').find_all(class_='quoteDetails')
-            text = '#goodreads #quote ' + random.choice(web_data).find(class_='quoteText').text.replace('\n', '').strip()
+            text = '#goodreads ' + random.choice(web_data).find(class_='quoteText').text.replace('\n', '').strip()
             return text
 
         def brainy(self):
@@ -59,13 +58,13 @@ class Quotes:
             web_data = BeautifulSoup(requests.get(goodhousekeeping_quotes + '{}'.format(random.choice(gh_tags))).text, 'html.parser').find_all(class_='slideshow-slide-content')
             feeling_lucky = random.choice(web_data)
             text_items = feeling_lucky.text.strip().splitlines()
-            text = '#goodhousekeeping #quote ' + text_items[-1] + ' - ' + text_items[0]
+            text = '#goodhousekeeping ' + text_items[-1] + ' - ' + text_items[0]
             return text
 
         def keep_inspiring(self):
             web_data = BeautifulSoup(requests.get(keepinspiring_quotes + '{}'.format(random.choice(ki_tags))).text, 'html.parser').find_all(class_='author-quotes')
             feeling_lucky = random.choice(web_data)
-            text = '#keepinspiringme #quote ' + feeling_lucky.text
+            text = '#keepinspiringme ' + feeling_lucky.text
             return text
 
     except IndexError:

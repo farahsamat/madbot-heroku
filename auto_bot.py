@@ -6,6 +6,20 @@ from src.quotes import Quotes
 from src.websites import Websites
 from os import environ
 
+bbc = 'https://www.bbc.com'
+ny_times = 'https://www.nytimes.com/'
+the_star = 'https://www.thestar.com.my/'
+malaysia_kini = 'https://www.malaysiakini.com/'
+abc = 'https://www.abc.net.au/news/'
+nine = 'https://www.9news.com.au/'
+tds = 'https://towardsdatascience.com/'
+nature = 'https://www.nature.com/'
+google_ai = 'https://ai.googleblog.com/'
+the_verge = 'https://www.theverge.com/'
+tech_crunch = 'https://techcrunch.com/'
+business_insider = 'https://www.businessinsider.com.au/'
+sc_news = 'https://www.sciencenews.org/all-stories'
+
 INTERVAL = 60 * 60 * 0.11
 MINI_INTERVAL = 60 * 60 * 0.055
 MICRO_INTERVAL = 60 * 60 * 0.0099
@@ -33,20 +47,22 @@ if __name__ == "__main__":
         random.shuffle(link)
 
         scrape = Websites()
-        news = [scrape.ny_times(),
-                scrape.nine_news(),
-                scrape.the_star(),
-                scrape.abc(),
-                scrape.bbc(),
-                scrape.malaysia_kini()]
+        news = [scrape.web(abc, 'doctype-article', abc[:-6], 'a', 'abcnews'),
+                scrape.web(nine, 'feeds', '', 'h3', 'ninenews'),
+                scrape.web(bbc, 'media-list__item media-list__item--1', bbc, 'a', 'bbcnews'),
+                scrape.web(ny_times, 'css-1qiat4j eqveam63', ny_times[:-1], 'h2', 'nytimes'),
+                scrape.web(the_star, 'col-sm-3 in-sec-story', '', 'h2', 'thestarMY'),
+                scrape.web(malaysia_kini, 'jsx-2856008738 titleStoryCard', malaysia_kini[:-1], 'h3', 'malaysiakini'),
+                ]
         random.shuffle(news)
 
-        sc_tech = [scrape.towards_data_science(),
-                 scrape.nature(),
-                 scrape.google_ai(),
-                 scrape.tech_crunch(),
-                 scrape.sc_news(),
-                 scrape.the_verge()]
+        sc_tech = [scrape.web(tds, 'col u-xs-size12of12 js-trackPostPresentation u-paddingLeft12 u-marginBottom15 u-paddingRight12 u-size4of12', '', 'h3', 'towardsdatascience'),
+                   scrape.web(nature, 'app-featured-row__item', nature[:-1], 'h3', 'nature'),
+                   scrape.web(google_ai, 'post', '', 'a', 'googleAI'),
+                   scrape.web(tech_crunch, 'content', '', 'a', 'techcrunch'),
+                   scrape.web(the_verge, 'c-entry-box--compact__body', '', 'h2', 'theverge'),
+                   scrape.web(business_insider, 'col post-description', '', 'a', 'businessinsider'),
+                   scrape.web(sc_news, 'post-item-river__title___J3spU', '', 'a', 'sciencenews')]
         random.shuffle(sc_tech)
 
         for q, n, a in zip(link, news, sc_tech):
