@@ -48,21 +48,18 @@ class Quotes:
             return
 
         def good_reads(self):
-            text = '#goodreads ' + random_quote(goodreads_quotes, gr_tags, 'quoteDetails').find(class_='quoteText').text.replace('\n', '').strip()
-            return text
+            return '#goodreads ' + random_quote(goodreads_quotes, gr_tags, 'quoteDetails').find(class_='quoteText').text.replace('\n', '').strip()
 
         def brainy(self):
             check_link = random_quote(brainy_quotes, bq_tags, 'clearfix').find('a')['href']
-            return '#brainyquote ', brainy_quotes[:-1]+check_link
+            return '#brainyquote ' + brainy_quotes[:-1]+check_link
 
         def good_housekeeping(self):
             text_items = random_quote(goodhousekeeping_quotes, gh_tags, 'slideshow-slide-content').text.strip().splitlines()
-            text = '#goodhousekeeping ' + text_items[-1] + ' - ' + text_items[0]
-            return text
+            return '#goodhousekeeping ' + text_items[-1] + ' - ' + text_items[0]
 
         def keep_inspiring(self):
-            text = '#keepinspiringme ' + random_quote(keepinspiring_quotes, ki_tags, 'author-quotes').text
-            return text
+            return '#keepinspiringme ' + random_quote(keepinspiring_quotes, ki_tags, 'author-quotes').text
 
     except IndexError:
         print("Index error")

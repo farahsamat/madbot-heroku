@@ -1,5 +1,6 @@
 import tweepy
 import random
+from src.cloud_image import CloudImage
 
 friends = []
 
@@ -37,5 +38,6 @@ class TwitterActions:
                     self.api.create_favorite(tweet.id)
             except tweepy.error.TweepError as e:
                 print(friend, e)
+
 
 
