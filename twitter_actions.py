@@ -16,19 +16,13 @@ class TwitterActions:
         except tweepy.error.TweepError as e:
             print(e)
 
-    def tweet_quote(self, quote):
+    def tweet_text(self, text):
         try:
-            self.api.update_status(quote, tweet_method='extended')
-        except tweepy.error.TweepError as e:
-            print(quote, e)
-
-    def tweet_news(self, text, link):
-        try:
-            self.api.update_status(text + ' ' + link, tweet_method='extended')
+            self.api.update_status(text, tweet_method='extended')
         except tweepy.error.TweepError as e:
             print(text, e)
 
-    def tweet_sc_tech(self, text, link):
+    def tweet_with_link(self, text, link):
         try:
             self.api.update_status(text + ' ' + link, tweet_method='extended')
         except tweepy.error.TweepError as e:

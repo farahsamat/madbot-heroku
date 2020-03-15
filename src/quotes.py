@@ -3,13 +3,13 @@ import random
 from bs4 import BeautifulSoup
 
 goodreads_quotes = 'https://www.goodreads.com/quotes/'
-gr_tags = ['philosophy',
-        'science',
-        'education',
-        'inspirational',
-        'time',
-        'life',
-        'wisdom']
+gr_tags = ['tag/philosophy',
+        'tag/science',
+        'tag/education',
+        'tag/inspirational',
+        'tag/time',
+        'tag/life',
+        'tag/wisdom']
 
 brainy_quotes = 'https://www.brainyquote.com/'
 bq_tags = ['topics/leadership-quotes',
@@ -36,35 +36,32 @@ ki_tags = ['famous-quotes/',
            '20-quotes-to-build-trust/',
            '24-quotes-moving-on-forward-thinking/']
 
+
+def random_quote(url, tags,  html_item):
+    web_data = BeautifulSoup(requests.get(url+ '{}'.format(random.choice(tags))).text, 'html.parser').find_all(class_='{}'.format(html_item))
+    feeling_lucky = random.choice(web_data)
+    return feeling_lucky
+
 class Quotes:
     try:
         def __init__(self):
             return
 
         def good_reads(self):
-            web_data = BeautifulSoup(requests.get(goodreads_quotes + 'tag/{}'.format(random.choice(gr_tags))).text,
-                                     'html.parser').find_all(class_='quoteDetails')
-            text = '#goodreads ' + random.choice(web_data).find(class_='quoteText').text.replace('\n', '').strip()
+            text = '#goodreads ' + random_quote(goodreads_quotes, gr_tags, 'quoteDetails').find(class_='quoteText').text.replace('\n', '').strip()
             return text
 
         def brainy(self):
-            web_data = BeautifulSoup(requests.get(brainy_quotes + '{}'.format(random.choice(bq_tags))).text,
-                                     'html.parser').find_all(class_='clearfix')
-            text_items = [item.text for item in random.choice(web_data).find_all('a')]
-            text = '#brainyquote ' + ' - '.join(text_items)
-            return text
+            check_link = random_quote(brainy_quotes, bq_tags, 'clearfix').find('a')['href']
+            return '#brainyquote ', brainy_quotes[:-1]+check_link
 
         def good_housekeeping(self):
-            web_data = BeautifulSoup(requests.get(goodhousekeeping_quotes + '{}'.format(random.choice(gh_tags))).text, 'html.parser').find_all(class_='slideshow-slide-content')
-            feeling_lucky = random.choice(web_data)
-            text_items = feeling_lucky.text.strip().splitlines()
+            text_items = random_quote(goodhousekeeping_quotes, gh_tags, 'slideshow-slide-content').text.strip().splitlines()
             text = '#goodhousekeeping ' + text_items[-1] + ' - ' + text_items[0]
             return text
 
         def keep_inspiring(self):
-            web_data = BeautifulSoup(requests.get(keepinspiring_quotes + '{}'.format(random.choice(ki_tags))).text, 'html.parser').find_all(class_='author-quotes')
-            feeling_lucky = random.choice(web_data)
-            text = '#keepinspiringme ' + feeling_lucky.text
+            text = '#keepinspiringme ' + random_quote(keepinspiring_quotes, ki_tags, 'author-quotes').text
             return text
 
     except IndexError:
