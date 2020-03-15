@@ -1,6 +1,6 @@
 import tweepy
 import random
-from src.cloud_image import CloudImage
+
 
 friends = []
 
