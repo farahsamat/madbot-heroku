@@ -49,6 +49,7 @@ if __name__ == "__main__":
     while True:
         items = []
         mad_bot.get_friend_list()
+        time_out()
 
         get_quote = Quotes()
         qotd = [get_quote.brainy(),
@@ -81,7 +82,6 @@ if __name__ == "__main__":
         confirmed = breaking.get_dataframe(confirmed_case)
         death = breaking.get_dataframe(death_case)
 
-        mad_bot.like_tweets()
         for quote, item in zip(qotd, items):
             mad_bot.tweet_text(quote)
             time_out()
@@ -92,6 +92,9 @@ if __name__ == "__main__":
             time_out()
             mad_bot.tweet_text(breaking.generate_text(confirmed, death))
             time_out()
+
+        mad_bot.like_tweets()
+        time_out()
 
 
 
