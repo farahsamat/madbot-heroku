@@ -4,6 +4,7 @@ import time
 from twitter_actions import TwitterActions
 from src.quotes import Quotes
 from src.websites import Websites
+from src.covid import CovidUpdates
 from os import environ
 
 bbc = 'https://www.bbc.com'
@@ -19,6 +20,10 @@ the_verge = 'https://www.theverge.com/'
 tech_crunch = 'https://techcrunch.com/'
 business_insider = 'https://www.businessinsider.com.au/'
 sc_news = 'https://www.sciencenews.org/all-stories'
+
+confirmed_case = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
+death_case = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv'
+
 
 INTERVAL = 60 * 60 * 0.11
 MINI_INTERVAL = 60 * 60 * 0.055
@@ -70,20 +75,28 @@ if __name__ == "__main__":
                    scrape.web(sc_news, 'post-item-river__title___J3spU', sc_news, 'a', 'sciencenews')]
         random.shuffle(sc_tech)
 
+        breaking = CovidUpdates()
+        confirmed = breaking.get_dataframe(confirmed_case)
+        death = breaking.get_dataframe(death_case)
+
         for q, n, a in zip(qotd, news, sc_tech):
             mad_bot.tweet_text(q)
             time_out()
+            mad_bot.tweet_text(breaking.generate_text(confirmed, death))
 
             text, url = n
             mad_bot.tweet_with_link(text, url)
             time_out()
+            mad_bot.tweet_text(breaking.generate_text(confirmed, death))
 
             text, url = a
             mad_bot.tweet_with_link(text, url)
             time_out()
+            mad_bot.tweet_text(breaking.generate_text(confirmed, death))
 
         mad_bot.like_tweets()
         time_out()
+        mad_bot.tweet_text(breaking.generate_text(confirmed, death))
 
 
 
