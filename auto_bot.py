@@ -47,6 +47,7 @@ if __name__ == "__main__":
     mad_bot = TwitterActions(api, username)
 
     while True:
+        items = []
         mad_bot.get_friend_list()
 
         get_quote = Quotes()
@@ -64,7 +65,7 @@ if __name__ == "__main__":
                 scrape.web(the_star, 'col-sm-3 in-sec-story', the_star, 'h2', 'thestarMY'),
                 scrape.web(malaysia_kini, 'jsx-2856008738 titleStoryCard', malaysia_kini[:-1], 'h3', 'malaysiakini'),
                 ]
-        random.shuffle(news)
+        items.append(news)
 
         sc_tech = [scrape.web(tds, 'col u-xs-size12of12 js-trackPostPresentation u-paddingLeft12 u-marginBottom15 u-paddingRight12 u-size4of12', tds, 'h3', 'towardsdatascience'),
                    scrape.web(nature, 'app-featured-row__item', nature[:-1], 'h3', 'nature'),
@@ -73,30 +74,24 @@ if __name__ == "__main__":
                    scrape.web(the_verge, 'c-entry-box--compact__body', the_verge, 'h2', 'theverge'),
                    scrape.web(business_insider, 'col post-description', business_insider, 'a', 'businessinsider'),
                    scrape.web(sc_news, 'post-item-river__title___J3spU', sc_news, 'a', 'sciencenews')]
-        random.shuffle(sc_tech)
+        items.append(sc_tech)
 
+        random.shuffle(items)
         breaking = CovidUpdates()
         confirmed = breaking.get_dataframe(confirmed_case)
         death = breaking.get_dataframe(death_case)
 
-        for q, n, a in zip(qotd, news, sc_tech):
+        mad_bot.like_tweets()
+        for quote, item in zip(qotd, items):
             mad_bot.tweet_text(q)
             time_out()
             mad_bot.tweet_text(breaking.generate_text(confirmed, death))
-
-            text, url = n
+            time_out()
+            text, url = item
             mad_bot.tweet_with_link(text, url)
             time_out()
             mad_bot.tweet_text(breaking.generate_text(confirmed, death))
-
-            text, url = a
-            mad_bot.tweet_with_link(text, url)
             time_out()
-            mad_bot.tweet_text(breaking.generate_text(confirmed, death))
-
-        mad_bot.like_tweets()
-        time_out()
-        mad_bot.tweet_text(breaking.generate_text(confirmed, death))
 
 
 
