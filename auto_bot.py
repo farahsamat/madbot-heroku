@@ -47,8 +47,6 @@ if __name__ == "__main__":
 
     while True:
         items = []
-        mad_bot.get_friend_list()
-        time_out()
 
         get_quote = Quotes()
         qotd = [get_quote.brainy(),
@@ -80,6 +78,9 @@ if __name__ == "__main__":
         breaking = CovidUpdates()
         confirmed = breaking.get_dataframe(confirmed_case)
         death = breaking.get_dataframe(death_case)
+        mad_bot.tweet_text(breaking.generate_text(confirmed, death))
+        mad_bot.get_friend_list()
+        time_out()
 
         for quote, item in zip(qotd, items):
             mad_bot.tweet_text(quote)
