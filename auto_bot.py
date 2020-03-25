@@ -83,7 +83,7 @@ if __name__ == "__main__":
 
         mad_bot.like_tweets()
         for quote, item in zip(qotd, items):
-            mad_bot.tweet_text(q)
+            mad_bot.tweet_text(quote)
             time_out()
             mad_bot.tweet_text(breaking.generate_text(confirmed, death))
             time_out()
