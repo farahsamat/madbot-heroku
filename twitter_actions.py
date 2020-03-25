@@ -10,13 +10,13 @@ MICRO_INTERVAL = 60 * 60 * 0.0099
 sleep_time = [INTERVAL, MINI_INTERVAL, MICRO_INTERVAL]
 
 def time_out():
-    pause = random.choice(sleep_time) * random.randint(1, 10)
-    sleep_text = ["BRB", "Later, alligator!", "See u in a bit", "Will be back in approximately {} mins".format(round(pause/60))]
-    print(pause, 'seconds')
-    if pause > 1799:
-        return random.choice(sleep_text), time.sleep(pause)
+    pause_time = random.choice(sleep_time) * random.randint(1, 10)
+    sleep_text = ["BRB", "Later, alligator!", "See u in a bit", "Will be back in approximately {} mins".format(round(pause_time/60))]
+    print(pause_time, 'seconds')
+    if pause_time > 1799:
+        return random.choice(sleep_text), pause_time
     else:
-        return '', time.sleep(pause)
+        return '', pause_time
 
 class TwitterActions:
     def __init__(self, api, username):
@@ -31,6 +31,7 @@ class TwitterActions:
             t, s = time_out()
             if len(t) != 0:
                 self.api.update_status(t, tweet_method='extended')
+                time.sleep(s)
         except tweepy.error.TweepError as e:
             print(e)
 
@@ -40,6 +41,7 @@ class TwitterActions:
             t, s = time_out()
             if len(t) != 0:
                 self.api.update_status(t, tweet_method='extended')
+                time.sleep(s)
         except tweepy.error.TweepError as e:
             print(text, e)
 
@@ -49,6 +51,7 @@ class TwitterActions:
             t, s = time_out()
             if len(t) != 0:
                 self.api.update_status(t, tweet_method='extended')
+                time.sleep(s)
         except tweepy.error.TweepError as e:
             print(text, e)
 
@@ -62,6 +65,7 @@ class TwitterActions:
                 t, s = time_out()
                 if len(t) != 0:
                     self.api.update_status(t, tweet_method='extended')
+                    time.sleep(s)
             except tweepy.error.TweepError as e:
                 print(friend, e)
 
