@@ -55,14 +55,17 @@ class CovidUpdates:
             d = get_sum_of_cases_per_country(death_df)
             c = c.sort_values(c.columns[-1], ascending=False).head(25)
             rndm_country = random.choice([country for country in c['Country/Region'].tolist()])
-            new_c = (c.loc[c['Country/Region'] == rndm_country]).iloc[0][-1]-(c.loc[c['Country/Region'] == rndm_country]).iloc[0][-2]
-            new_d = (d.loc[d['Country/Region'] == rndm_country]).iloc[0][-1]-(d.loc[d['Country/Region'] == rndm_country]).iloc[0][-2]
-            return "COVID-19 update in {} as of {}: {} total confirmed cases ({} new), {} total deaths ({} new). Data from JHU CSSE {}".format(rndm_country,
-                                                                                                                        today,
-                                                                                                                        (c.loc[c['Country/Region'] == rndm_country]).iloc[0][-1],
-                                                                                                                        new_c,
-                                                                                                                        (d.loc[d['Country/Region'] == rndm_country]).iloc[0][-1],
-                                                                                                                        new_d, link)
+            new_c = int((c.loc[c['Country/Region'] == rndm_country]).iloc[0][-1]) - int(
+                (c.loc[c['Country/Region'] == rndm_country]).iloc[0][-2])
+            new_d = int((d.loc[d['Country/Region'] == rndm_country]).iloc[0][-1]) - int(
+                (d.loc[d['Country/Region'] == rndm_country]).iloc[0][-2])
+            return "COVID-19 update in {} as of {}: {} total confirmed cases ({} new), {} total deaths ({} new). Data from JHU CSSE {}".format(
+                rndm_country,
+                today,
+                int((c.loc[c['Country/Region'] == rndm_country]).iloc[0][-1]),
+                new_c,
+                int((d.loc[d['Country/Region'] == rndm_country]).iloc[0][-1]),
+                new_d, link)
 
     except IndexError:
         print("Index error")
