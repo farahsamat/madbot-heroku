@@ -36,7 +36,6 @@ if __name__ == "__main__":
     mad_bot = TwitterActions(api, username)
 
     while True:
-        items = []
 
         get_quote = Quotes()
         qotd = [get_quote.brainy(),
@@ -61,9 +60,7 @@ if __name__ == "__main__":
                 scrape.web(the_verge, 'c-entry-box--compact__body', the_verge, 'h2', 'theverge'),
                 scrape.web(business_insider, 'col post-description', business_insider, 'a', 'businessinsider'),
                 scrape.web(sc_news, 'post-item-river__title___J3spU', sc_news, 'a', 'sciencenews')]
-
-        items.append(websites)
-        random.shuffle(items)
+        random.shuffle(websites)
 
         breaking_news = CovidUpdates()
         confirmed = breaking_news.get_dataframe(confirmed_case)
@@ -72,10 +69,10 @@ if __name__ == "__main__":
         mad_bot.get_friend_list()
 
 
-        for quote, item in zip(qotd, items):
-            mad_bot.tweet_text(quote)
+        for q, w in zip(qotd, websites):
+            mad_bot.tweet_text(q)
             mad_bot.tweet_text(breaking_news.generate_text(confirmed, death))
-            text, url = item
+            text, url = w
             mad_bot.tweet_with_link(text, url)
             mad_bot.tweet_text(breaking_news.generate_text(confirmed, death))
 
