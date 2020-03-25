@@ -2,7 +2,9 @@ import requests
 import io
 import pandas as pd
 import random
+from datetime import datetime
 
+today = datetime.today().strftime('%d-%m-%Y')
 
 geo_data = {'data':[
     {'country': 'United Kingdom', 'lat':55.3781, 'long':3.4360},
@@ -52,7 +54,6 @@ class CovidUpdates:
             c = get_sum_of_cases_per_country(confirmed_df)
             d = get_sum_of_cases_per_country(death_df)
             c = c.sort_values(c.columns[-1], ascending=False).head(25)
-            latest = c.columns[-1]
             rndm_country = random.choice([country for country in c['Country/Region'].tolist()])
             new_c = int((c.loc[c['Country/Region'] == rndm_country]).iloc[0][-1]) - int(
                 (c.loc[c['Country/Region'] == rndm_country]).iloc[0][-2])
@@ -60,7 +61,7 @@ class CovidUpdates:
                 (d.loc[d['Country/Region'] == rndm_country]).iloc[0][-2])
             return "#COVID19 stats in {} ({}): {} total confirmed cases ({} new), {} total deaths ({} new). Data from JHU CSSE {}".format(
                 rndm_country,
-                latest,
+                today,
                 int((c.loc[c['Country/Region'] == rndm_country]).iloc[0][-1]),
                 new_c,
                 int((d.loc[d['Country/Region'] == rndm_country]).iloc[0][-1]),
