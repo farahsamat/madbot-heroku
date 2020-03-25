@@ -21,9 +21,8 @@ tech_crunch = 'https://techcrunch.com/'
 business_insider = 'https://www.businessinsider.com.au/'
 sc_news = 'https://www.sciencenews.org/all-stories'
 
-confirmed_case = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
-death_case = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv'
-
+confirmed_case = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
+death_case = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
 
 INTERVAL = 60 * 60 * 0.11
 MINI_INTERVAL = 60 * 60 * 0.055

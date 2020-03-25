@@ -48,7 +48,7 @@ class CovidUpdates:
             return data
 
         def generate_text(self, confirmed_df, death_df):
-            link = 'https://github.com/CSSEGISandData/COVID-19'
+            link = 'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series'
             c = get_sum_of_cases_per_country(confirmed_df)
             d = get_sum_of_cases_per_country(death_df)
             c = c.sort_values(c.columns[-1], ascending=False).head(25)
