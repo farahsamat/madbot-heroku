@@ -4,8 +4,6 @@ import pandas as pd
 import random
 from datetime import datetime
 
-today = datetime.today().strftime('%d-%m-%Y')
-
 geo_data = {'data':[
     {'country': 'United Kingdom', 'lat':55.3781, 'long':3.4360},
     {'country': 'Netherlands', 'lat':52.1326, 'long':5.2913},
@@ -52,6 +50,7 @@ class CovidUpdates:
         def generate_text(self, confirmed_df, death_df):
             link = 'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series'
             c = get_sum_of_cases_per_country(confirmed_df)
+            latest = c.columns[-1]
             d = get_sum_of_cases_per_country(death_df)
             c = c.sort_values(c.columns[-1], ascending=False).head(25)
             rndm_country = random.choice([country for country in c['Country/Region'].tolist()])
@@ -61,7 +60,7 @@ class CovidUpdates:
                 (d.loc[d['Country/Region'] == rndm_country]).iloc[0][-2])
             return "#COVID19 stats in {} ({}): {} total confirmed cases ({} new), {} total deaths ({} new). Data from JHU CSSE {}".format(
                 rndm_country,
-                today,
+                latest,
                 int((c.loc[c['Country/Region'] == rndm_country]).iloc[0][-1]),
                 new_c,
                 int((d.loc[d['Country/Region'] == rndm_country]).iloc[0][-1]),

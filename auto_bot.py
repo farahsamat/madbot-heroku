@@ -66,17 +66,17 @@ if __name__ == "__main__":
         confirmed = breaking_news.get_dataframe(confirmed_case)
         death = breaking_news.get_dataframe(death_case)
         mad_bot.tweet_text(breaking_news.generate_text(confirmed, death))
-        mad_bot.get_friend_list()
 
+        mad_bot.get_friend_list()
+        mad_bot.like_tweets()
 
         for q, w in zip(qotd, websites):
             mad_bot.tweet_text(q)
-            mad_bot.tweet_text(breaking_news.generate_text(confirmed, death))
             text, url = w
             mad_bot.tweet_with_link(text, url)
-            mad_bot.tweet_text(breaking_news.generate_text(confirmed, death))
 
-        mad_bot.like_tweets()
+
+
 
 
 
