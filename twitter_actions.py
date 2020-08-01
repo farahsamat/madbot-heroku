@@ -13,7 +13,7 @@ def time_out():
     pause_time = random.choice(sleep_time) * random.randint(1, 10)
     sleep_text = ["BRB", "Later, alligator!", "See u in a bit", "Will be back in approximately {} mins".format(round(pause_time/60))]
     print(pause_time, 'seconds')
-    if pause_time > 1799:
+    if pause_time > 3000:
         return random.choice(sleep_text), pause_time
     else:
         return '', pause_time
